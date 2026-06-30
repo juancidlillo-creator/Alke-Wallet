@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet - Depositar</title>
+    <!-- CDN de jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- CDN de Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Estilos personalizados paleta de colores -->
+    <style>
+        /* Fondo pantalla color Beige */
+        body {
+            background-color: #eff6e0 !important;
+        }
+
+        /* Texto encabezado: Ink Black  */
+        .textoTituloColor {
+            color: #01161e;
+        }
+
+        /* Botón principal: Dark Teal y hover en Ink Black */
+        .botonColor{
+            background-color: #124559;
+            color: #ffffff;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+        .botonColor:hover {
+            background-color: #01161e;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(1, 22, 30, 0.2);
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100 py-4">
+    <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="card shadow-sm p-4 bg-white">
+
+                        <h2 class="text-center mb-4 fw-bold tracking-tight textoTituloColor">Depositar</h2>
+                        
+                        <!-- Contenedor para la alerta dinámica -->
+                        <div id="alert-container"></div>
+
+                        <!-- Mostrar saldo actual -->
+                        <div class="mb-3 text-center">
+                            <span class="fw-semibold text-secondary">Saldo actual: </span>
+                            <span id="saldoActual" class="fw-bold text-success">$0.00</span>
+                        </div>
+
+                        <form id="depositoFormulario">
+                            <div class="form-group mb-3">
+                                <label for="depositAmount" class="form-label fw-semibold text-secondary">Monto a depositar:</label>
+                                <div>
+                                    <input type="number" class="form-control" id="depositAmount" placeholder="Ingresa el monto" min="1" required>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-lg fw-semibold py-2.5 botonColor">Realizar depósito</button>
+                            </div>
+                        </form>
+                        <div class="d-grid gap-2 mt-4">
+                            <a href="menu.html" class="btn btn-lg fw-semibold py-2.5 botonColor">Volver al Menú Principal</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <!-- Script depósito y actualizar saldo -->
+    <script>
+        // Espera que el HTML este cargado
+        $(document).ready(function () {
+            // Obtener saldo actual
+            // El local storage es una funcionalidad de los navegadores que permite a los desarrolladores guardar información en el navegador del usuario. Es parte de Web Storage API [API de Almacenamiento Web] junto a session storage.
+            let saldoActualVal = localStorage.getItem("saldo");
+
+            // Si no hay saldo guardado, empieza en 777777
+            if (saldoActualVal === null) {
+                saldoActualVal = "777777";
+            }
+
+            // Mostrar el saldo actual
+            $("#saldoActual").text("$" + parseFloat(saldoActualVal).toFixed(2));
+
+            // Manejar el evento submit del formulario
+            $("#depositoFormulario").submit(function (evento) {
+                // Evitar que la página se recargue sola
+                evento.preventDefault();
+
+                // Obtener monto ingresad
+                const montoIngresado = parseFloat($("#depositAmount").val());
+
+                // Obtener saldo actual
+                let saldoActual = localStorage.getItem("saldo");
+                 // Si no hay saldo guardado, usar el saldo inicial 777777
+                if (saldoActual === null) {
+                    saldoActual = 777777;
+                } else {
+                    saldoActual = parseFloat(saldoActual);
+                }
+
+                // Calcular el nuevo saldo
+                const nuevoSaldo = saldoActual + montoIngresado;
+
+                // Guarda el nuevo saldo 
+                localStorage.setItem("saldo", nuevoSaldo);
+
+                // Actualizar el saldo mostrado
+                $("#saldoActual").text("$" + nuevoSaldo.toFixed(2));
+
+                // Guarda el movimiento 
+                let movimientos = localStorage.getItem("movimientos");
+                if (movimientos === null) {
+                    // Crear la lista inicial
+                    movimientos = [
+                        "Compra en línea - $50.00",
+                        "Depósito - $100.00",
+                        "Transferencia recibida - $75.00",
+                        "Compra en línea - $5550.00",
+                        "Depósito misma cuenta - $10500.00",
+                        "Transferencia recibida - $7575.00"
+                    ];
+                } else {
+                    // Acceder a la información del local storage, es necesario devolverla a su forma original. Esto lo haces usando el método JSON.parse()
+                    movimientos = JSON.parse(movimientos);
+                }
+
+                // Agrega depósito a la lista para mostrar en Últimos Movimientos
+                movimientos.push("Depósito realizado - $" + montoIngresado.toFixed(2));
+
+                // Guardar la lista actualizada en localStorage
+                localStorage.setItem("movimientos", JSON.stringify(movimientos));
+
+                // Mostrar mensaje de Depósito realizado
+                $("#montoDepositadoLeyenda").text("Depósito realizado." + montoIngresado.toFixed(2));
+                $("#montoDepositadoLeyenda").removeClass("d-none");
+
+                // Crear dinámicamente la alerta de Bootstrap con jQuery #alert-container
+                const alertaHTML = $('<div class="alert alert-success text-center" role="alert">Depósito realizado.</div>');
+                $('#alert-container').html(alertaHTML);
+
+                // Redirigir menu.html después de 2 sg
+                setTimeout(function () { window.location.href = "../menu.html";}, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

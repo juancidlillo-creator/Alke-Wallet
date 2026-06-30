@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet - Últimos Movimientos</title>
+    <!-- CDN de jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- CDN de Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Estilos personalizados paleta de colores -->
+    <style>
+        /* Fondo pantalla color Beige */
+        body {
+            background-color: #eff6e0 !important;
+        }
+
+        /* Texto encabezado: Ink Black  */
+        .textoTituloColor {
+            color: #01161e;
+        }
+
+        /* Botón principal: Dark Teal y hover en Ink Black */
+        .botonColor{
+            background-color: #124559;
+            color: #ffffff;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+        .botonColor:hover {
+            background-color: #01161e;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(1, 22, 30, 0.2);
+        }
+
+        /* Lista Color: Ash Grey*/
+        .listaColor li{
+            background-color: #AEC3B0;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100 py-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow-sm p-4 bg-white">
+        
+                    <h2 class="text-center mb-4 fw-bold tracking-tight textoTituloColor">Últimos Movimientos</h2>
+
+                    <!-- Filtro por tipo de movimiento -->
+                    <div class="mb-3">
+                        <label for="filtroTipo" class="form-label fw-semibold text-secondary">Filtrar por tipo de movimiento:</label>
+                        <select id="filtroTipo" class="form-select">
+                            <option value="todos">Todos los movimientos</option>
+                            <option value="compra">Compras</option>
+                            <option value="deposito">Depósitos</option>
+                            <option value="transferencia">Transferencias</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <ul id="listaMovimientosHtml" class="list-group listaColor">
+                            <!-- Los movimientos se cargarán dinámicamente con JS -->
+                        </ul>
+                    </div>
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="menu.html" class="btn btn-lg fw-semibold py-2.5 botonColor">Volver al Menú Principal</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script mostrar los movimientos -->
+    <script>
+        // Declara la lista de transacciones manera global
+        let listaTransacciones = [];
+
+        // Función clasificar y detectar el tipo de movimiento según su texto
+        function getTipoDeMovimiento(movimientoTexto) {
+            const texto = movimientoTexto.toLowerCase();
+            if (texto.includes('compra')) {
+                return 'compra';
+            } else if (texto.includes('depósito') || texto.includes('deposito')) {
+                return 'deposito';
+            } else if (texto.includes('transferencia')) {
+                return 'transferencia';
+            }
+            return 'otro';
+        }
+
+        // Función para obtener el tipo de transacción
+        function getTipoTransaccion(tipo) {
+            if (tipo === 'compra') {
+                return 'Compra';
+            } else if (tipo === 'deposito') {
+                return 'Depósito';
+            } else if (tipo === 'transferencia') {
+                return 'Transferencia';
+            }
+            return 'Otro';
+        }
+
+        // Función que muestra los últimos movimientos correspondientes en la lista
+        function mostrarUltimosMovimientos(filtro) {
+            // Limpiar la lista actual en la pantalla 
+            $('#listaMovimientosHtml').empty();
+
+            // Recorrer la lista de transacciones de atrás hacia adelante (el más nuevo primero)
+            for (let i = listaTransacciones.length - 1; i >= 0; i--) {
+                const movimiento = listaTransacciones[i];
+                const tipo = getTipoDeMovimiento(movimiento);
+
+                // Si el filtro es igual a "todos" o el tipo coincide con el seleccionado
+                if (filtro === 'todos' || tipo === filtro) {
+                    // Obtener el tipo 
+                    const tipoFormateo = getTipoTransaccion(tipo);
+
+                    // Crea elemento de lista <li>
+                    const nuevoLi = $('<li class="list-group-item"></li>');
+                    
+                    nuevoLi.text(`[${tipoFormateo}] - ${movimiento}`);
+
+                      // Añadir el elemento a la lista HTML
+                    $('#listaMovimientosHtml').append(nuevoLi);
+                }
+            }
+        }
+
+        // Espera que el HTML este cargado
+        $(document).ready(function () {
+            // Lee los movimientos guardados en localStorage
+            let movimientosGuardados = localStorage.getItem('movimientos');
+
+            // Si no existen movimientos, crear la lista inicial
+            if (movimientosGuardados === null) {
+                const movimientosIniciales = [
+                    "Compra en línea - $50.00",
+                    "Depósito - $100.00",
+                    "Transferencia recibida - $75.00",
+                    "Compra en línea - $5550.00",
+                    "Depósito misma cuenta - $10500.00",
+                    "Transferencia recibida - $7575.00"
+                ];
+                // Guardar en formato texto JSON
+                 // El método JSON.stringify() convierte un objeto o valor de JavaScript en una cadena de texto JSON, opcionalmente reemplaza valores si se indica una función de reemplazo, o si se especifican las propiedades mediante un array de reemplazo.
+                localStorage.setItem('movimientos', JSON.stringify(movimientosIniciales));
+                listaTransacciones = movimientosIniciales;
+            } else {
+                // Acceder a la información del local storage, es necesario devolverla a su forma original. Esto lo haces usando el método JSON.parse()
+                listaTransacciones = JSON.parse(movimientosGuardados);
+            }
+
+            // Muestra todos los movimientos por defecto 
+            mostrarUltimosMovimientos('todos');
+
+            // Revisa el cambio en el filtro tipo select u
+            $('#filtroTipo').change(function () {
+                const filtroSeleccionado = $(this).val();
+                
+                // Llama a la función para actualizar la lista
+                mostrarUltimosMovimientos(filtroSeleccionado);
+            });
+        });
+    </script>
+</body>
+</html>
