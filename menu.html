@@ -39,23 +39,31 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
-                <div class="card shadow-sm p-4 bg-white">
+                <!--Animacion jQuery fadeIn-->
+                <div class="card shadow-sm p-4 bg-white" id="panelMenu" style="display: none;">
 
                     <h2 class="text-center mb-4 fw-bold tracking-tight textoTituloColor">Menú Principal</h2>
 
-                    <div class="form-group mb-3">
-                        <label for="balance">Dinero en cuenta:</label>
-                        <h3 id="saldoActual">777777</h3>
+                    <div class="row g-3 mb-4">
+                        <div class="col-12">
+                            <div class="card border-0 shadow-sm text-white" style="background-color: #124559;">
+                                <div class="card-body p-4 text-center">
+                                    <h6 class="text-uppercase text-white-50 mb-2 fw-semibold">Saldo Disponible</h6>
+                                    <h2 class="display-6 fw-bold mb-0">$<span id="saldoActual">0.00</span></h2>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Mensaje alerta de redirección -->
-                    <div id="alerta" class="alert alert-info d-none text-center mt-3" role="alert"></div>
+                    <div id="alerta" class="alert alert-info d-none text-center mt-2" role="alert"></div>
 
-                    <div class="d-grid gap-2 mt-4">
-                        <button id="botonDepositar" class="btn btn-lg fw-semibold py-2.5 botonColor">Depositar</button>
-                        <button id="botonEnviarDinero" class="btn btn-lg fw-semibold py-2.5 botonColor">Enviar Dinero</button>
-                        <button id="botonUltimosMovimientos" class="btn btn-lg fw-semibold py-2.5 botonColor">Últimos Movimientos</button>
-                    </div>
+                    <nav class="nav nav-pills flex-column gap-2 mt-2">
+                        <a id="botonDepositar" class="nav-link text-center fw-semibold py-2.5 botonColor" style="cursor: pointer;">Depositar</a>
+                        <a id="botonEnviarDinero" class="nav-link text-center fw-semibold py-2.5 botonColor" style="cursor: pointer;">Enviar Dinero</a>
+                        <a id="botonUltimosMovimientos" class="nav-link text-center fw-semibold py-2.5 botonColor" style="cursor: pointer;">Últimos Movimientos</a>
+                        <a id="botonSalir" class="nav-link text-center fw-semibold py-2.5 bg-dark text-warning" style="cursor: pointer;" href="login.html">Cerrar Sesión</a>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -67,6 +75,9 @@
     <script>
         // Espera que el HTML este cargado
         $(document).ready(function () {
+
+            // Animación al cargar el menú principal
+            $("#panelMenu").fadeIn(800);
 
             // Mostrar saldo al cargar la página
             // El local storage es una funcionalidad de los navegadores que permite a los desarrolladores guardar información en el navegador del usuario. Es parte de Web Storage API [API de Almacenamiento Web] junto a session storage.
@@ -84,31 +95,28 @@
             // Evento clic en el botón Depositar
             $("#botonDepositar").click(function () {
                 // Mensaje de redigir a Enviar Dinero
-                $("#alerta").text("Redirigiendo a Depositar.");
-                $("#alerta").removeClass("d-none");
+                $("#alerta").hide().text("Redirigiendo a Depositar.").removeClass("d-none").slideDown(300);
 
                 // Redirigir deposit.html después de 2 sg
-                setTimeout(function () { window.location.href = "../deposit.html"; }, 2000);
+                setTimeout(function () { window.location.href = "deposit.html"; }, 2000);
             });
 
             // Evento al hacer clic en el botón Enviar Dinero
             $("#botonEnviarDinero").click(function () {
                 // Mensaje de redigir a Enviar Dinero
-                $("#alerta").text("Redirigiendo a Enviar Dinero.");
-                $("#alerta").removeClass("d-none");
+                $("#alerta").hide().text("Redirigiendo a Enviar Dinero.").removeClass("d-none").slideDown(300);
 
                 // Redirigir sendmoney.html después de 2 sg
-                setTimeout(function () {window.location.href = "../sendmoney.html";}, 2000);
+                setTimeout(function () {window.location.href = "sendmoney.html";}, 2000);
             });
 
             // Evento al hacer clic en el botón Últimos Movimientos
             $("#botonUltimosMovimientos").click(function () {
                 // Mensaje de redigir a Últimos Movimientos
-                $("#alerta").text("Redirigiendo a últimos movimientos...");
-                $("#alerta").removeClass('d-none');
+                $("#alerta").hide().text("Redirigiendo a últimos movimientos...").removeClass('d-none').slideDown(300);
 
                 // Redirigir transactions.html después de 2 sg
-                setTimeout(function () {window.location.href = "../transactions.html";}, 2000);
+                setTimeout(function () {window.location.href = "transactions.html";}, 2000);
             });
         });
     </script>
