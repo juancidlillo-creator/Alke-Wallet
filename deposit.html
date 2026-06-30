@@ -111,7 +111,9 @@
                 localStorage.setItem("saldo", nuevoSaldo);
 
                 // Actualizar el saldo mostrado
-                $("#saldoActual").text("$" + nuevoSaldo.toFixed(2));
+                $("#saldoActual").fadeOut(150, function() {
+                    $(this).text("$" + nuevoSaldo.toFixed(2)).fadeIn(150);
+                });
 
                 // Guarda el movimiento 
                 let movimientos = localStorage.getItem("movimientos");
@@ -136,16 +138,13 @@
                 // Guardar la lista actualizada en localStorage
                 localStorage.setItem("movimientos", JSON.stringify(movimientos));
 
-                // Mostrar mensaje de Depósito realizado
-                $("#montoDepositadoLeyenda").text("Depósito realizado." + montoIngresado.toFixed(2));
-                $("#montoDepositadoLeyenda").removeClass("d-none");
-
                 // Crear dinámicamente la alerta de Bootstrap con jQuery #alert-container
-                const alertaHTML = $('<div class="alert alert-success text-center" role="alert">Depósito realizado.</div>');
+                const alertaHTML = $('<div class="alert alert-success text-center shadow-sm" role="alert" style="display: none;">¡Depósito realizado con éxito!</div>');
                 $('#alert-container').html(alertaHTML);
+                alertaHTML.slideDown(300);
 
                 // Redirigir menu.html después de 2 sg
-                setTimeout(function () { window.location.href = "../menu.html";}, 2000);
+                setTimeout(function () { window.location.href = "menu.html";}, 2000);
             });
         });
     </script>
