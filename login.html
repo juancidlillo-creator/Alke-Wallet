@@ -94,24 +94,19 @@
 
 
                 // Reiniciar estado de la alerta
-                $('#alerta').addClass("d-none");
-                $('#alerta').removeClass("alert-success");
-                $('#alerta').removeClass("alert-danger");
-                $('#alerta').text("");
+                $('#alerta').hide().addClass("d-none").removeClass("alert-success alert-danger").text("");
 
                 if (emailIngresado === emailCorrecto && contrasenaIngresada === contrasenaCorrecta) {
                     // Mostrar mensaje de exito
-                    $('#alerta').text("Inicio de Sesión Correcto.");
-                    $('#alerta').removeClass("d-none");
-                    $('#alerta').addClass("alert-success");
+                    // se agrega animacion
+                    $('#alerta').text("Inicio de Sesión Correcto.").addClass("alert-success").removeClass("d-none").fadeIn(400);
 
                     // Redirigir menu.html después de 2sg
-                    setTimeout(function () {window.location.href = "../menu.html";}, 2000);
+                    setTimeout(function () {window.location.href = "menu.html";}, 2000);
                 } else {
                     // Mostrar mensaje de error
-                    $('#alerta').text("Credenciales incorrectas.");
-                    $('#alerta').removeClass("d-none");
-                    $('#alerta').addClass("alert-danger");
+                    // se agrega animacion
+                    $('#alerta').text("Credenciales incorrectas.").addClass("alert-danger").removeClass("d-none").fadeIn(400);
                 }
             });
 
