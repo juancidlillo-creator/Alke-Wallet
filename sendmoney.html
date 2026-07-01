@@ -58,25 +58,24 @@
                     </div>
                     
                     <div class="d-grid gap-2 mt-4">
-                        <button type="button" id="botonAbrirModal" class="btn btn-lg fw-semibold py-2.5 botonColor">Agregar nuevo contacto</button>
+                        <button type="button" id="botonAbrirModal" class="btn btn-lg fw-semibold py-2.5 botonColor" data-bs-toggle="modal" data-bs-target="#modalContacto">Agregar nuevo contacto</button>
                     </div>
-                    
 
                     <h3 class="text-center mb-4 mt-4 fw-bold tracking-tight textoTituloColor">Contactos</h3>
                     
                     <div class="form-group mb-3">
-                        <ul id="contactList" class="list-group listaColor">
-                            <li class="list-group-item">
+                        <ul id="contactList" class="list-group listaColor shadow-sm">
+                            <li class="list-group-item" style="cursor: pointer;">
                                 <div class="contact-info">
-                                    <span class="contact-name">John Doe</span>
-                                    <span class="contact-details">CBU: 123456789, Alias: john.doe, Banco: ABC Bank</span>
+                                    <span class="contact-name fw-semibold">John Doe</span><br>
+                                    <span class="contact-details text-muted">CBU: 123456789, Alias: john.doe, Banco: ABC Bank</span>
                                 </div>
                             </li>
                             
-                            <li class="list-group-item">
+                            <li class="list-group-item" style="cursor: pointer;">
                                 <div class="contact-info">
-                                    <span class="contact-name">Jane Smith</span>
-                                    <span class="contact-details">CBU: 987654321, Alias: jane.smith, Banco: XYZ Bank</span>
+                                    <span class="contact-name fw-semibold">Jane Smith</span><br>
+                                    <span class="contact-details text-muted">CBU: 987654321, Alias: jane.smith, Banco: XYZ Bank</span>
                                 </div>
                             </li>
                         </ul>
@@ -92,74 +91,100 @@
                     <div class="d-grid gap-2 mt-4">
                         <a href="menu.html" class="btn btn-lg fw-semibold py-2.5 botonColor">Volver al Menú Principal</a>
                     </div>
-
-
                 </div>
             </div>
         </div>
-
     </div>
-
-    <!-- Formulario emergente (Modal) -->
+    <!-- Formulario emergente (Modal Contacto Bootstrap) -->
     <!--Un formulario emergente (modal) es una ventana de diálogo superpuesta a la página principal que requiere interacción del usuario. Es ideal para captar datos sin redirigir a otra pantalla, bloqueando la navegación hasta que se completa o se cierra.-->
-    <div id="modalContacto" class="d-none position-fixed top-0 start-0 w-100 h-100 align-items-center justify-content-center" style="background: rgba(0, 0, 0, 0.5); z-index: 1050;">
-        <div class="card p-4 col-11 col-md-8 col-lg-5 shadow-lg bg-white">
-            <h4 class="text-center mb-3 fw-bold textoTituloColor">Nuevo Contacto</h4>
-            <form id="formularioContacto">
-                <div class="mb-3">
-                    <label for="nombreContacto" class="form-label fw-semibold text-secondary">Nombre y apellido:</label>
-                    <input type="text" class="form-control" id="nombreContacto" required>
+    <div class="modal fade" id="modalContacto" tabindex="-1" aria-labelledby="modalContactoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3 border-0 shadow-lg">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold textoTituloColor" id="modalContactoLabel">Nuevo Contacto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="mb-3">
-                    <label for="cbuContacto" class="form-label fw-semibold text-secondary">CBU:</label>
-                    <input type="text" class="form-control" id="cbuContacto" required>
+                <div class="modal-body">
+                    <form id="formularioContacto">
+                        <div class="mb-3">
+                            <label for="nombreContacto" class="form-label fw-semibold text-secondary">Nombre y apellido:</label>
+                            <input type="text" class="form-control" id="nombreContacto" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cbuContacto" class="form-label fw-semibold text-secondary">CBU (10 números):</label>
+                            <input type="text" class="form-control" id="cbuContacto" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="aliasContacto" class="form-label fw-semibold text-secondary">Alias:</label>
+                            <input type="text" class="form-control" id="aliasContacto" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bancoContacto" class="form-label fw-semibold text-secondary">Nombre del Banco:</label>
+                            <input type="text" class="form-control" id="bancoContacto" required>
+                        </div>
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-success w-50 fw-semibold py-2">Guardar</button>
+                            <button type="button" class="btn btn-secondary w-50 fw-semibold py-2" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="aliasContacto" class="form-label fw-semibold text-secondary">Alias:</label>
-                    <input type="text" class="form-control" id="aliasContacto" required>
-                </div>
-                <div class="mb-3">
-                    <label for="bancoContacto" class="form-label fw-semibold text-secondary">Nombre del Banco:</label>
-                    <input type="text" class="form-control" id="bancoContacto" required>
-                </div>
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-success w-50 fw-semibold">Guardar</button>
-                    <button type="button" id="botonCancelarContacto" class="btn btn-secondary w-50 fw-semibold">Cancelar</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
+    <!-- Modal de Transferencia de Dinero (Bootstrap) -->
+    <div class="modal fade" id="modalTransferencia" tabindex="-1" aria-labelledby="modalTransferenciaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3 border-0 shadow-lg">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold textoTituloColor" id="modalTransferenciaLabel">Realizar Transferencia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 text-center bg-light p-3 rounded shadow-sm">
+                        <span class="text-secondary fw-semibold">Destinatario:</span>
+                        <h5 class="fw-bold mb-0 textoTituloColor" id="transfDestinatario">Nombre</h5>
+                        <small class="text-muted" id="transfDetalles">CBU: Alias: Banco:</small>
+                    </div>
+                    <form id="formularioTransferencia">
+                        <div class="mb-3">
+                            <label for="montoTransferir" class="form-label fw-semibold text-secondary">Monto a enviar:</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" step="0.01" class="form-control form-control-lg fw-bold text-success" id="montoTransferir" placeholder="0.00" min="0.01" required>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <small class="text-muted">Saldo disponible: <span id="saldoDisponibleTransf" class="fw-bold text-dark">$0.00</span></small>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary w-50 fw-semibold py-2.5 botonColor">Confirmar Envío</button>
+                            <button type="button" class="btn btn-secondary w-50 fw-semibold py-2.5" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Script de Bootstrap 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
     <!-- Script envío de dinero y agregar contactos -->
     <script>
-        // Espera que el HTML este cargado
         $(document).ready(function () {
-            // Variable para guardar el contacto
+            // Variable para guardar el contacto seleccionado
             let contactoSeleccionado = null;
 
-            // // Mostrar Modal Agregar nuevo contacto
-            $("#botonAbrirModal").click(function () {
-                $("#modalContacto").removeClass("d-none").addClass("d-flex");
-            });
-
-            // Ocultar Modal al cancelar
-            $("#botonCancelarContacto").click(function () {
-                $("#modalContacto").removeClass("d-flex").addClass("d-none");
-                $("#formularioContacto")[0].reset(); // Limpiar campos del formulario
-            });
-
-            //Valida el formulario de nuevo contacto
+            // Valida el formulario de nuevo contacto
             $("#formularioContacto").submit(function (evento) {
-                // Evitar recarga de página
                 evento.preventDefault();
 
-                // Campos del formulario
                 const nombre = $("#nombreContacto").val().trim();
                 const cbu = $("#cbuContacto").val().trim();
                 const alias = $("#aliasContacto").val().trim();
                 const banco = $("#bancoContacto").val().trim();
 
-                // Valida que los campos no estén vacíos
                 if (nombre === "" || cbu === "" || alias === "" || banco === "") {
                     alert("Los campos son obligatorios.");
                     return;
@@ -168,94 +193,99 @@
                 // Valida el formato de CBU 10 números
                 const cbuRegex = /^\d{10}$/;
                 if (!cbuRegex.test(cbu)) {
-                    alert("El CBU es de 10 números");
+                    alert("El CBU debe contener 10 números.");
                     return;
                 }
 
-
                 // Crea dinámicamente nuevos elementos de contacto
                 const nuevoLi = $(`
-                    <li class="list-group-item">
+                    <li class="list-group-item" style="cursor: pointer; display: none;">
                         <div class="contact-info">
-                            <span class="contact-name">${nombre}</span><br>
-                            <span class="contact-details">CBU: ${cbu}, Alias: ${alias}, Banco: ${banco}</span>
+                            <span class="contact-name fw-semibold">${nombre}</span><br>
+                            <span class="contact-details text-muted">CBU: ${cbu}, Alias: ${alias}, Banco: ${banco}</span>
                         </div>
                     </li>
                 `);
 
-                // Agrega el contacto a la lista 
+                // Agrega el contacto a la lista con animación
                 $("#contactList").append(nuevoLi);
+                nuevoLi.slideDown(300);
 
-                 // Cerrar el modal y limpiar formulario
-                $("#modalContacto").removeClass("d-flex").addClass("d-none");
+                // Cerrar modal usando API Bootstrap
+                const modalContactoEl = document.getElementById('modalContacto');
+                const modalContactoInst = bootstrap.Modal.getInstance(modalContactoEl) || new bootstrap.Modal(modalContactoEl);
+                modalContactoInst.hide();
                 $("#formularioContacto")[0].reset();
             });
 
-            // Realizar búsqueda dinámica en la agenda 
+            // Realizar búsqueda dinámica en la agenda con animación jQuery
             $("#searchContact").on("keyup", function () {
                 const termino = $(this).val().toLowerCase();
 
-                // Recorrer la lista de contactos
                 $("#contactList li").each(function () {
                     const textoContacto = $(this).text().toLowerCase();
 
                     // Si coincide con el texto, lo muestra; si no, lo oculta
                     if (textoContacto.indexOf(termino) > -1) {
-                        $(this).removeClass("d-none");
+                        $(this).slideDown(200);
                     } else {
-                        $(this).addClass("d-none");
+                        $(this).slideUp(200);
                     }
                 });
             });
 
-            // Seleccion de contacto y  el botón "Enviar dinero"
+            // Seleccion de contacto y resaltar
             $("#contactList").on("click", "li", function () {
-                // Quita los bordes
-                $("#contactList li").removeClass("border border-dark border-3");
-
-                // Resalta el contacto seleccionado
-                $(this).addClass("border border-dark border-3");
-
-                // Guardar la referencia del contacto seleccionado
+                $("#contactList li").removeClass("border border-dark border-3 bg-light");
+                $(this).addClass("border border-dark border-3 bg-light");
                 contactoSeleccionado = this;
-
-                // Muestra el botón Enviar dinero
-                $("#botonEnviarDinero").removeClass("d-none");
             });
 
-            // Evento para Enviar Dinero
+            // Evento para Enviar Dinero - Abre formulario modal
             $("#botonEnviarDinero").click(function () {
                 // Reinicia alerta
                 $("#alerta").addClass("d-none").removeClass("alert-warning alert-danger");
 
-                // Verifica si hay un contacto seleccionado
+                // Verifica si hay un contacto 
                 if (contactoSeleccionado === null) {
-                    $("#alerta").text("Seleccione un contacto primero.");
-                    $("#alerta").removeClass("d-none").addClass("alert-warning");
+                    $("#alerta").text("Seleccione un contacto primero.").removeClass("d-none").addClass("alert-warning").hide().slideDown(300);
                     return;
                 }
 
-                // Obtiene el nombre del contacto 
+                // Obtiene detalles del contacto 
                 const nombreContacto = $(contactoSeleccionado).find(".contact-name").text();
+                const detallesContacto = $(contactoSeleccionado).find(".contact-details").text();
 
-                // Pedir el monto a enviar
-                const montoTexto = prompt("Ingrese monto");
+                // Cargar datos en el Modal de Transferencia
+                $("#transfDestinatario").text(nombreContacto);
+                $("#transfDetalles").text(detallesContacto);
 
-                // Si se cancela o deja vacío el prompt
-                if (montoTexto === null || montoTexto.trim() === "") {
-                    return;
+                // Recuperar saldo actual para validación en pantalla
+                let saldoActual = localStorage.getItem("saldo");
+                if (saldoActual === null) {
+                    saldoActual = 777777;
+                } else {
+                    saldoActual = parseFloat(saldoActual);
                 }
+                $("#saldoDisponibleTransf").text(saldoActual.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                $("#montoTransferir").val("");
 
-                // Convertir a número
-                const montoAEnviar = parseFloat(montoTexto);
+                // Abrir el modal de Transferencia
+                const modalTransf = new bootstrap.Modal(document.getElementById('modalTransferencia'));
+                modalTransf.show();
+            });
 
-                // Validar que el monto sea un número válido y mayor a cero
+            // Envío de dinero desde el modal de transacción
+            $("#formularioTransferencia").submit(function (evento) {
+                evento.preventDefault();
+
+                const montoAEnviar = parseFloat($("#montoTransferir").val());
+
                 if (isNaN(montoAEnviar) || montoAEnviar <= 0) {
                     alert("Ingrese un monto válido o mayor a cero.");
                     return;
                 }
 
-                // Recuperar saldo actual
                 let saldoActual = localStorage.getItem("saldo");
                 if (saldoActual === null) {
                     saldoActual = 777777;
@@ -265,21 +295,22 @@
 
                 // Verificar si hay suficiente saldo
                 if (montoAEnviar > saldoActual) {
-                    $("#alerta").text("Saldo insuficiente. Tu saldo actual es de $" + saldoActual);
-                    $("#alerta").removeClass("d-none").addClass("alert-danger");
+                    alert("Saldo insuficiente. Tu saldo actual es de $" + saldoActual.toLocaleString('es-ES', { minimumFractionDigits: 2 }));
                     return;
                 }
 
+                // Cerrar modal de transferencia
+                const modalTransfEl = document.getElementById('modalTransferencia');
+                const modalTransfInst = bootstrap.Modal.getInstance(modalTransfEl);
+                modalTransfInst.hide();
+
                 // Calcular el nuevo saldo
                 const nuevoSaldo = saldoActual - montoAEnviar;
-
-                // Guardar el nuevo saldo en localStorage
                 localStorage.setItem("saldo", nuevoSaldo);
 
                 // Registrar el movimiento en la lista
                 let movimientos = localStorage.getItem("movimientos");
                 if (movimientos === null) {
-                    // Crea lista inicial
                     movimientos = [
                         "Compra en línea - $50.00",
                         "Depósito - $100.00",
@@ -289,21 +320,18 @@
                         "Transferencia recibida - $7575.00"
                     ];
                 } else {
-                    // Acceder a la información del local storage, es necesario devolverla a su forma original. Esto lo haces usando el método JSON.parse()
                     movimientos = JSON.parse(movimientos);
                 }
 
-                // Agregar la transferencia a la lista
+                const nombreContacto = $(contactoSeleccionado).find(".contact-name").text();
                 movimientos.push("Transferencia enviada a " + nombreContacto + " - $" + montoAEnviar.toFixed(2));
-                // Guardar la lista actualizada en localStorage
                 localStorage.setItem("movimientos", JSON.stringify(movimientos));
 
                 // Mostrar confirmación
-                $("#confirmacionEnvio").text("Monto Enviado.");
-                $("#confirmacionEnvio").removeClass("d-none");
+                $("#confirmacionEnvio").text("Monto de $" + montoAEnviar.toFixed(2) + " enviado con éxito a " + nombreContacto + ".").removeClass("d-none").hide().slideDown(300);
 
-                // Redirigir menu.html después de 2 sg
-                setTimeout(function () {window.location.href = "../menu.html"; }, 2000);
+                // Redirigir menu.html después de 2.5 sg
+                setTimeout(function () { window.location.href = "menu.html"; }, 2500);
             });
         });
     </script>
